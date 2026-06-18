@@ -69,3 +69,40 @@ If you encounter syntax blocks during cross-compilation, let me know:
 [16] [https://docs.getchip.cc](https://docs.getchip.cc/chip_pro_devkit)
 [17] [https://www.genuinemodules.com](https://www.genuinemodules.com/how-to-install-cisco-usb-console-driver_a370)
 [18] [https://corstone1000.docs.arm.com](https://corstone1000.docs.arm.com/en/latest/user-guide.html)
+
+---
+
+---
+### check this flake
+```
+nix flake check -v -L --no-build --no-write-lock-file --all-systems github:denver-cfman/nixos-chip?ref=main
+```
+
+### show this flake
+```
+nix flake show --all-systems --json github:denver-cfman/nixos-chip?ref=main | jq '.'
+```
+
+### remote install via nixos-anywhere
+```bash
+nix run github:nix-community/nixos-anywhere -- --flake 'github:denver-cfman/nixos-chip?ref=tinker#hermes-test1' --target-host nixos@10.0.85.186
+```
+
+### remote update nix (nixos-rebuild) on cluster head
+#### nixos-rebuild
+```
+sudo nixos-rebuild switch --impure --refresh --flake github:denver-cfman/nixos-chip?ref=tinker#hermes-test1 --no-write-lock-file
+```
+#### deploy-rs
+```
+K3S_TOKEN=thisisjustatest nix run github:serokell/deploy-rs github:denver-cfman/nixos-chip?ref=main#hermes-test1 -- -s -d --ssh-user giezac --hostname 10.0.81.99
+```
+#### build iso image for install
+```
+sudo nix build --impure --refresh --rebuild --no-update-lock-file -L -v github:denver-cfman/nixos-chip?ref=tinker#nixosConfigurations.hermes-test1.config.system.build.isoImage --extra-experimental-features "flakes nix-command"
+```
+
+#### Test Compile of a single package
+```
+nix build github:NixOS/nixpkgs/e4f449ab51a283676d3b520c3dbaa3eafa5025b4#pkgsCross.aarch64-multiplatform.screen
+```
