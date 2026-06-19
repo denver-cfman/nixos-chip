@@ -97,9 +97,9 @@ sudo nixos-rebuild switch --impure --refresh --flake github:denver-cfman/nixos-c
 ```
 K3S_TOKEN=thisisjustatest nix run github:serokell/deploy-rs github:denver-cfman/nixos-chip?ref=main#pine64 -- -s -d --ssh-user giezac --hostname 10.0.81.99
 ```
-#### build iso image for install
+#### build tarball for flashing
 ```
-sudo nix build --impure --refresh --rebuild --no-update-lock-file -L -v github:denver-cfman/nixos-chip?ref=tinker#nixosConfigurations.pine64.config.system.build.isoImage --extra-experimental-features "flakes nix-command"
+nix build --impure --refresh --rebuild --no-update-lock-file -L -v github:denver-cfman/nixos-chip?ref=flake-up#nixosConfigurations.chip.config.system.build.tarball
 ```
 
 #### Test Compile of a single package
