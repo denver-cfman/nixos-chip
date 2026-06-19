@@ -69,3 +69,30 @@ If you encounter syntax blocks during cross-compilation, let me know:
 [16] [https://docs.getchip.cc](https://docs.getchip.cc/chip_pro_devkit)
 [17] [https://www.genuinemodules.com](https://www.genuinemodules.com/how-to-install-cisco-usb-console-driver_a370)
 [18] [https://corstone1000.docs.arm.com](https://corstone1000.docs.arm.com/en/latest/user-guide.html)
+
+---
+
+---
+### check this flake
+```
+nix flake check -v -L --no-build --no-write-lock-file --all-systems github:denver-cfman/nixos-chip?ref=main
+```
+
+### show this flake
+```
+nix flake show --all-systems --json github:denver-cfman/nixos-chip?ref=main | jq '.'
+```
+### remote update nix (nixos-rebuild) on cluster head
+#### nixos-rebuild
+```
+sudo nixos-rebuild switch --impure --refresh --no-write-lock-file --flake "github:denver-cfman/nixos-chip?ref=main#chip"```
+```
+#### build tarball for flashing (on x86_64 ayatem NOT the CHIP)
+```
+nix build --impure --refresh --no-update-lock-file -L -v "github:denver-cfman/nixos-chip?ref=flake-up#default"
+```
+
+#### Test Compile of a single package
+```
+nix build github:NixOS/nixpkgs/e4f449ab51a283676d3b520c3dbaa3eafa5025b4#pkgsCross.aarch64-multiplatform.screen
+```
