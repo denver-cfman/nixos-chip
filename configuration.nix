@@ -21,7 +21,7 @@
   hardware.enableRedistributableFirmware = true;
   boot.kernelParams = [ "console=ttyS0,115200n8" "earlyprintk" ];
 
-  networking.hostName = "ntc-chip";
+  networking.hostName = "chip";
 
 
   time.timeZone = "America/Denver";
